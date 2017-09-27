@@ -1,0 +1,13 @@
+Tarea
+* Codifique un banco de pruebas VHDL (VHDL test bench) para la
+verificación del funcionamiento de los módulos seq1100circuit y
+seq1100diagram. Muestre los resultados de las simulaciones.
+
+* Realice el proceso de diseño (usando flip-flop JK) de una FSM
+representada por el siguiente diagrama de estados:
+
+
+- Codifique en VHDL el circuito resultante.
+- Codifique la máquina de estados a partir del diagrama de estados.
+- Codifique los bancos de prueba para la verificación de los módulos.
+- Muestre los diagramas de tiempos de las respectivas simulaciones.
