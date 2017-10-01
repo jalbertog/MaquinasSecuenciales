@@ -1,0 +1,1 @@
+xst -intstyle ise -ifn "/home/ghost/Repo_Sistemas_L/seq1100diagram/seq1100diagram.xst" -ofn "/home/ghost/Repo_Sistemas_L/seq1100diagram/seq1100diagram.syr" 

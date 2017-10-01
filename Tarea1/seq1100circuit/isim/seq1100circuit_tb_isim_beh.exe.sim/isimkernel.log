@@ -1,0 +1,29 @@
+Command line:
+   seq1100circuit_tb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  38717
+
+Sun Oct  1 19:29:09 2017
+
+
+ Elaboration Time: 0.01 sec
+
+ Current Memory Usage: 157.028 Meg
+
+ Total Signals          : 21
+ Total Nets             : 10
+ Total Signal Drivers   : 10
+ Total Blocks           : 5
+ Total Primitive Blocks : 3
+ Total Processes        : 10
+ Total Traceable Variables  : 9
+ Total Scalar Nets and Variables : 371
+Total Line Count : 60
+
+ Total Simulation Time: 0.02 sec
+
+ Current Memory Usage: 232.53 Meg
+
+Sun Oct  1 19:29:20 2017
+

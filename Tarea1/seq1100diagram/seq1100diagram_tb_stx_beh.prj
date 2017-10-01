@@ -1,0 +1,2 @@
+vhdl isim_temp "seq1100diagram.vhd"
+vhdl isim_temp "seq1100diagram_tb.vhd"

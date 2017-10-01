@@ -1,0 +1,2 @@
+xst -intstyle ise -ifn "/home/ghost/Repo_Sistemas_L/seq1100circuit/seq1100circuit.xst" -ofn "/home/ghost/Repo_Sistemas_L/seq1100circuit/seq1100circuit.syr" 
+xst -intstyle ise -ifn "/home/ghost/Repo_Sistemas_L/seq1100circuit/seq1100circuit.xst" -ofn "/home/ghost/Repo_Sistemas_L/seq1100circuit/seq1100circuit.syr" 

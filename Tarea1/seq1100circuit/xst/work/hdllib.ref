@@ -1,0 +1,4 @@
+EN flipflopd NULL /home/ghost/Repo_Sistemas_L/seq1100circuit/FlipflopD.vhd sub00/vhpl00 1506900516
+EN seq1100circuit NULL /home/ghost/Repo_Sistemas_L/seq1100circuit/seq1100circuit.vhd sub00/vhpl02 1506900518
+AR seq1100circuit behavioral /home/ghost/Repo_Sistemas_L/seq1100circuit/seq1100circuit.vhd sub00/vhpl03 1506900519
+AR flipflopd behavioral /home/ghost/Repo_Sistemas_L/seq1100circuit/FlipflopD.vhd sub00/vhpl01 1506900517

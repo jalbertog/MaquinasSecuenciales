@@ -1,0 +1,3 @@
+vhdl isim_temp "FlipflopD.vhd"
+vhdl isim_temp "seq1100circuit.vhd"
+vhdl isim_temp "seq1100circuit_tb.vhd"

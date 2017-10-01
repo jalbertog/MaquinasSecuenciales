@@ -1,0 +1,3 @@
+vhdl work "FlipflopD.vhd"
+vhdl work "seq1100circuit.vhd"
+vhdl work "seq1100circuit_tb.vhd"
