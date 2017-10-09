@@ -1,21 +1,21 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--This is an ISE project configuration file.-->
 <!--It holds project specific layout data for the projectmgr plugin.-->
 <!--Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.-->
-<Project version="2" owner="projectmgr" name="edgeDetectMealy" >
+<Project version="2" owner="projectmgr" name="DebouncingCircuit" >
    <!--This is an ISE project configuration file.-->
    <ItemView engineview="SynthesisOnly" guiview="Source" compilemode="AutoCompile" >
       <ClosedNodes>
          <ClosedNodesVersion>2</ClosedNodesVersion>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>edge_detect_mealy - Behavioral (/home/agarciat/Documentos/Est/MaquinasSecuenciales/MaquinasSecuenciales/Tarea2/edgeDetectMealy/edge_detect_mealy.vhd)</SelectedItem>
+         <SelectedItem>db_fsm - Behavioral (/home/agarciat/Documentos/Est/MaquinasSecuenciales/MaquinasSecuenciales/Tarea2/DebouncingCircuit/db_fsm.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001af000000020000000000000000000000000200000064ffffffff000000810000000300000002000001af0000000100000003000000000000000100000003</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000002020000000100000001000000640000011f000000020000000000000000000000000200000064ffffffff0000008100000003000000020000011f0000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>edge_detect_mealy - Behavioral (/home/agarciat/Documentos/Est/MaquinasSecuenciales/MaquinasSecuenciales/Tarea2/edgeDetectMealy/edge_detect_mealy.vhd)</CurrentItem>
+      <CurrentItem>db_fsm - Behavioral (/home/agarciat/Documentos/Est/MaquinasSecuenciales/MaquinasSecuenciales/Tarea2/DebouncingCircuit/db_fsm.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="" guiview="Process" >
       <ClosedNodes>
@@ -23,13 +23,13 @@
          <ClosedNode>Design Utilities</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem/>
+         <SelectedItem></SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f6000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f60000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem/>
+      <CurrentItem></CurrentItem>
    </ItemView>
    <ItemView guiview="File" >
       <ClosedNodes>
@@ -40,7 +40,7 @@
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000000000000000100000000000000000000000000000000000001e1000000040101000100000000000000000000000064ffffffff0000008100000000000000040000004a0000000100000000000000280000000100000000000000790000000100000000000000f60000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>edgeDetectTestbench.vhd</CurrentItem>
+      <CurrentItem></CurrentItem>
    </ItemView>
    <ItemView guiview="Library" >
       <ClosedNodes>
@@ -75,16 +75,16 @@
    <ItemView engineview="BehavioralSim" guiview="Source" compilemode="AutoCompile" >
       <ClosedNodes>
          <ClosedNodesVersion>2</ClosedNodesVersion>
-         <ClosedNode>/edgeDetectTestbench - behavior |home|agarciat|Documentos|Est|MaquinasSecuenciales|MaquinasSecuenciales|Tarea2|edgeDetectMealy|edgeDetectTestbench.vhd</ClosedNode>
+         <ClosedNode>/debouncingTestbench - behavior |home|agarciat|Documentos|Est|MaquinasSecuenciales|MaquinasSecuenciales|Tarea2|DebouncingCircuit|debouncingTestbench.vhd</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>edgeDetectTestbench - behavior (/home/agarciat/Documentos/Est/MaquinasSecuenciales/MaquinasSecuenciales/Tarea2/edgeDetectMealy/edgeDetectTestbench.vhd)</SelectedItem>
+         <SelectedItem>debouncingTestbench - behavior (/home/agarciat/Documentos/Est/MaquinasSecuenciales/MaquinasSecuenciales/Tarea2/DebouncingCircuit/debouncingTestbench.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001b3000000020000000000000000000000000200000064ffffffff000000810000000300000002000001b30000000100000003000000000000000100000003</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001b7000000020000000000000000000000000200000064ffffffff000000810000000300000002000001b70000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>edgeDetectTestbench - behavior (/home/agarciat/Documentos/Est/MaquinasSecuenciales/MaquinasSecuenciales/Tarea2/edgeDetectMealy/edgeDetectTestbench.vhd)</CurrentItem>
+      <CurrentItem>debouncingTestbench - behavior (/home/agarciat/Documentos/Est/MaquinasSecuenciales/MaquinasSecuenciales/Tarea2/DebouncingCircuit/debouncingTestbench.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="" guiview="Process" >
       <ClosedNodes>
@@ -92,13 +92,13 @@
          <ClosedNode>Design Utilities</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem/>
+         <SelectedItem></SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f6000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f60000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem/>
+      <CurrentItem></CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
       <ClosedNodes>
