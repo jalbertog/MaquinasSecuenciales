@@ -1,0 +1,209 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ 
+ 
+ENTITY TB_secdiagram IS
+END TB_secdiagram;
+ 
+ARCHITECTURE behavior OF TB_secdiagram IS 
+ 
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT secdiagram
+    PORT(
+         x : IN  std_logic;
+         clk : IN  std_logic;
+         reset : IN  std_logic;
+         z : OUT  std_logic
+        );
+    END COMPONENT;
+    
+
+   --Inputs
+   signal x : std_logic := '0';
+   signal clk : std_logic := '0';
+   signal reset : std_logic := '0';
+
+ 	--Outputs
+   signal z : std_logic;
+
+   -- Clock period definitions
+   constant clk_period : time := 10 ns;
+ 
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: secdiagram PORT MAP (
+          x => x,
+          clk => clk,
+          reset => reset,
+          z => z
+        );
+
+   -- Clock process definitions
+   clk_process :process
+   begin
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
+   end process;
+ 
+
+   -- Stimulus process
+   stim_proc: process
+   begin		
+      -- hold reset state for 100 ns.
+      wait for 100 ns;	
+
+      wait for clk_period*10;
+
+      -- insert stimulus here 
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '0'; wait for 5 ns; --Wait for half the clock period since it is a Mealy's Machine
+		
+		
+		assert z = '1' report "Detector Failed"; --Sequence Met!
+		
+		
+		x <= '1'; wait for 5 ns;--Wait for another half the clock period to give the pulse its usual width
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 5 ns;--Wait for half the clock period since it is a Mealy's Machine
+		
+		
+		assert z = '1' report "Detector Failed"; --Sequence Met!
+		
+		
+		x <= '0'; wait for 5 ns;--Wait for another half the clock period to give the pulse its usual width
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 5 ns;--Wait for half the clock period since it is a Mealy's Machine
+		
+		
+		assert z = '1' report "Detector Failed"; --Sequence Met!
+		
+		
+		--------------------------
+		x <= '1'; wait for 5 ns;--Wait for another half the clock period to give the pulse its usual width
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '0'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		x <= '1'; wait for 10 ns;
+		assert z = '0' report "Detector Failed";
+		--------------------------
+		report "ATTENTION: This is a self-cheking test bench. If no 'Detector Failed' message is prompted, it means that the detector succeded!";
+      wait;
+   end process;
+
+END;
