@@ -1,0 +1,49 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity Debouncing is
+    Port ( clk : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           sw : in  STD_LOGIC;
+           db : out  STD_LOGIC);
+end Debouncing;
+
+architecture Behavioral of Debouncing is
+	signal m_tick: STD_LOGIC;
+	component debouncing_FSM
+		port (reset : in  STD_LOGIC;
+           clk : in  STD_LOGIC;
+           m_tick : in  STD_LOGIC;
+           sw : in  STD_LOGIC;
+           db : out  STD_LOGIC);
+	end component;
+	
+	component timer 
+		port (reset : in  STD_LOGIC;
+            clk : in  STD_LOGIC;
+            m_tick : out  STD_LOGIC);
+	end component;
+		 
+begin
+--Debouncing_FSM
+	FSM: Debouncing_FSM port map (reset => reset,
+											clk => clk,
+											m_tick => m_tick,
+											sw => sw,
+											db => db);
+											
+	Timer0: Timer port map (reset => reset,
+								  clk => clk,
+								  m_tick => m_tick); 
+
+end Behavioral;
+ 
