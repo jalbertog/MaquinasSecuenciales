@@ -1,0 +1,58 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity secdeca is
+    Port ( x : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           clk : in  STD_LOGIC;
+           z : out  STD_LOGIC;
+			  nextstate: out STD_LOGIC_VECTOR (1 DOWNTO 0);
+			  current_state: out STD_LOGIC_VECTOR (1 DOWNTO 0));
+end secdeca;
+
+architecture Behavioral of secdeca is
+signal J1, K1, J2, K2, Q1, Q1n, Q2, Q2n: STD_LOGIC;	
+	component jkff
+		Port (clk : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           j : in  STD_LOGIC;
+           k : in  STD_LOGIC;
+           q :buffer  STD_LOGIC;
+           qn : buffer  STD_LOGIC);
+	end component;
+begin
+
+	--Next State Logic
+	J1 <= Q2 and (not x);
+	K1 <= ((not Q2) and (not x))or(Q2 and x);
+	J2 <= x;
+	K2 <= not x;
+
+   --State Memory 
+	
+	FF1:	jkff port map (clk => clk,
+								reset => reset,
+								J => J1,
+								K => K1,
+								Q => Q1,
+								Qn => Q1n
+								);
+	FF2:	jkff port map (clk => clk,
+								reset => reset,
+								J => J2,
+								K => K2,
+								Q => Q2,
+								Qn => Q2n
+								);
+--Output Logic
+
+	z <= Q1 and Q2 and (not x);
+
+--Debugging Logic -- All this logic should be commented out once the module is working as intended.
+	
+	--nextstate <= (J1 and K1) & (J2 and K2);
+	nextstate <= (((not Q1) and J1) or (Q1 and J1)) & 
+					 (((not Q2) and J2) or (Q2 and J2)) ;
+	current_state <= Q1 & Q2;
+
+end Behavioral;
