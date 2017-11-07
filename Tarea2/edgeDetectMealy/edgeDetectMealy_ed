@@ -1,0 +1,53 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity Detflancmealy is
+    Port ( clk : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           x : in  STD_LOGIC;
+           y : out  STD_LOGIC);
+end Detflancmealy;
+
+architecture Behavioral of Detflancmealy is
+	type statetype is (S0, S1);
+	signal state, nextstate: statetype;
+begin
+--State Memory
+	process (clk, reset) begin
+		if reset = '1' then state <= S0;
+		elsif clk'event and clk = '1' then
+			state <= nextstate;
+		end if;
+	end process;
+	
+--Next State Logic
+
+	process (state, x) begin
+		case state is
+			when S0 => if x = '0' then
+								nextstate <= S0;
+						  else
+								nextstate <= S1;
+							end if;
+			when S1 => if x = '0' then
+								nextstate <= S0;
+						  else
+								nextstate <= S1;
+							end if;
+		end case;
+	end process;
+	
+--Output Logic
+	
+	y <= '1' when (x = '1' and state = S0) else '0';
+
+end Behavioral;
