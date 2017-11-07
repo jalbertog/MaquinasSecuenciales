@@ -1,0 +1,112 @@
+--------------------------------------------------------------------------------
+-- Company: 
+-- Engineer:
+--
+-- Create Date:   12:19:08 10/26/2017
+-- Design Name:   
+-- Module Name:   C:/Users/Eduardo/Maquinas_Secuenciales/Antireb/Antireb/TB_Debouncing_FSM.vhd
+-- Project Name:  Antireb
+-- Target Device:  
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ 
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--USE ieee.numeric_std.ALL;
+ 
+ENTITY TB_Debouncing_FSM IS
+END TB_Debouncing_FSM;
+ 
+ARCHITECTURE behavior OF TB_Debouncing_FSM IS 
+ 
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT Debouncing_FSM
+    PORT(
+         reset : IN  std_logic;
+         clk : IN  std_logic;
+         m_tick : IN  std_logic;
+         sw : IN  std_logic;
+         db : OUT  std_logic
+        );
+    END COMPONENT; 
+    
+
+   --Inputs
+   signal reset : std_logic := '1';
+   signal clk : std_logic := '0';
+   signal m_tick : std_logic := '0';
+   signal sw : std_logic := '0';
+
+ 	--Outputs
+   signal db : std_logic;
+
+   -- Clock period definitions
+   constant clk_period : time := 10 ns;
+ 
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: Debouncing_FSM PORT MAP (
+          reset => reset,
+          clk => clk,
+          m_tick => m_tick,
+          sw => sw,
+          db => db
+        );
+
+   -- Clock process definitions
+   clk_process :process
+   begin
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
+   end process;
+ 
+
+   -- Stimulus process
+   stim_proc: process
+   begin		
+      -- hold reset state for 100 ns.
+      wait for 100 ns;	
+
+      wait for clk_period*10;
+		
+		reset <= '0';
+      -- insert stimulus here 
+		wait for 40 ns;
+		sw <= '1'; wait for 5 ns;
+		sw <= '0'; wait for 5 ns;
+		sw <= '1'; wait for 5 ns;
+		sw <= '0'; wait for 5 ns;
+		sw <= '1'; wait for 5 ns;
+		sw <= '0'; wait for 5 ns;
+		sw <= '1';
+		wait for 10 ns;
+		
+		m_tick <= '1'; wait for 10 ns;
+		m_tick <= '0'; wait for 50 ns;
+		m_tick <= '1'; wait for 10 ns;
+		m_tick <= '0'; wait for 50 ns;
+		m_tick <= '1'; wait for 10 ns;
+		m_tick <= '0'; wait for 120 ns;		
+		sw <= '0'; wait for 5 ns;
+		sw <= '1'; wait for 5 ns;
+		sw <= '0'; wait for 5 ns;
+		sw <= '1'; wait for 5 ns;
+		sw <= '0'; wait for 5 ns;
+		sw <= '1'; wait for 5 ns;
+		sw <= '0'; wait for 5 ns;
+		m_tick <= '1'; wait for 10 ns;
+		m_tick <= '0'; wait for 50 ns;
+		m_tick <= '1'; wait for 10 ns;
+		m_tick <= '0'; wait for 50 ns;
+		m_tick <= '1'; wait for 10 ns;
+		m_tick <= '0'; wait for 50 ns;
+		m_tick <= '1'; wait for 10 ns;
+		m_tick <= '0'; wait for 50 ns;
+		wait;
+   end process;
+
+END;
