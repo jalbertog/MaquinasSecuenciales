@@ -1,140 +1,95 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    00:11:54 12/02/2017 
--- Design Name: 
--- Module Name:    Fifo - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use ieee.numeric_std.all;
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+entity STD_FIFO is
+	Generic (
+		constant DATA_WIDTH  : positive := 8;
+		constant FIFO_DEPTH	: positive := 56 --Tamaño del buffer
+	);
+	Port ( 
+		CLK		: in  STD_LOGIC;
+		RST		: in  STD_LOGIC;
+		WriteEn	: in  STD_LOGIC;
+		DataIn	: in  STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0);
+		ReadEn	: in  STD_LOGIC;
+		DataOut	: out STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0);
+		Empty	: out STD_LOGIC; 
+		Full	: out STD_LOGIC --flag de desborde del Buffer
+	);
+end STD_FIFO;
 
+architecture Behavioral of STD_FIFO is
 
-entity fifo is
-  generic(
-    B: natural:=8; -- number of bits
-    W: natural:=4 -- number of address bits
-  );
-  port (
-    clk, reset: in std_logic;
-    rd, wr: in std_logic;
-    w_data: in std_logic_vector (B-1 downto 0);   
-    empty: out std_logic;
-    full: out std_logic;
-    r_data: out std_logic_vector (B-1 downto 0)
-    );
-    end fifo;
-    
-    architecture arch of fifo is 
-      type reg_file_type is array (2**W-1 downto 0 ) of std_logic_vector (B-1 downto 0 );
-      signal array_reg: reg_file_type;
-      signal w_ptr_reg, w_ptr_next, w_ptr_succ: std_logic_vector (W-1 downto 0);
-      signal r_ptr_reg, r_ptr_next, r_ptr_succ: std_logic_vector (W-1 downto 0);
-      signal full_reg, empty_reg, full_next, empty_next: std_logic;
-      signal wr_op: std_logic_vector (1 downto 0);
-      signal wr_en: std_logic;
-      begin
-      --=================================
-      --Register
-      --========--------=================
-      
-      process (clk, reset)
-      begin
-      if (reset='1') then 
-      array_reg <= (others =>(others=>'0'));
-      elsif (clk'event and clk='1') then 
-        if wr_en='1' then 
-          array_reg(to_integer(unsigned(w_ptr_reg))) <= w_data;
-        end if;
-      end if;
-    end process;
-    
-    --read port
-    r_data <= array_reg(to_integer(unsigned(r_ptr_reg)));
-    --write enabled only when FIFO is not full
-    wr_en <= wr and (not full_reg);
-    --==========================
-    -- FIFO control logic
-    --==============================
-    --Register for read and write pointers
-    
-    process(clk,reset)
-    begin
-      if (reset='1') then 
-        w_ptr_reg <= (others=>'0');
-        r_ptr_reg <= (others=>'0');
-        full_reg <= '0';
-        empty_reg <='1';
-        elsif (clk'event and clk ='1') then 
-          w_ptr_reg <= w_ptr_next;
-          r_ptr_reg <= r_ptr_next;
-          full_reg <= full_next;
-          empty_reg <= empty_next;
-        end if;
-      end process;
-      
-    --successive pointer values
-    
-    w_ptr_succ <= std_logic_vector(unsigned(w_ptr_reg)+1);
-    r_ptr_succ <= std_logic_vector(unsigned(r_ptr_reg)+1);
-    
-    -- next state logic for read and write pointers
-    
-    wr_op <= wr & rd;
-    process (w_ptr_reg,w_ptr_succ,r_ptr_reg,r_ptr_succ,wr_op,empty_reg,full_reg)
-    begin
-      w_ptr_next <= w_ptr_reg;
-      r_ptr_next <= r_ptr_reg;
-      full_next <= full_next;
-      empty_next <= empty_reg;
-      
-      case wr_op is
-        when "00" =>  --no op
-        when "01" => --read
-          if (empty_reg /= '1') then -- not empty
-            r_ptr_next <= r_ptr_succ;
-            full_next <= '0';
-            if (r_ptr_succ=w_ptr_reg) then 
-              empty_next <= '1';
-            end if;
-          end if;
-        when "10" => --write
-          if (full_reg /= '1' ) then  --not full
-            w_ptr_next <= w_ptr_succ;
-            empty_next <= '0';
-            if (w_ptr_succ=r_ptr_reg) then 
-              full_next <= '1';
-            end if;
-          end if;
-        when others => --write/read;
-        w_ptr_next <= w_ptr_succ;
-        r_ptr_next <= r_ptr_succ;
-      end case;
-    end process;
-    --output
-    full <= full_reg;
-    empty <= empty_reg;
-    end arch;
-        
-   
+begin
 
+	-- Memory Pointer Process
+	fifo_proc : process (CLK)
+		type FIFO_Memory is array (0 to FIFO_DEPTH - 1) of STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0);
+		variable Memory : FIFO_Memory;
+		
+		variable Head : natural range 0 to FIFO_DEPTH - 1;
+		variable Tail : natural range 0 to FIFO_DEPTH - 1;
+		
+		variable Looped : boolean;
+	begin
+		if rising_edge(CLK) then
+			if RST = '1' then
+				Head := 0;
+				Tail := 0;
+				
+				Looped := false;
+				
+				Full  <= '0';
+				Empty <= '1';
+			else
+				if (ReadEn = '1') then
+					if ((Looped = true) or (Head /= Tail)) then
+						-- Update data output
+						DataOut <= Memory(Tail);
+						
+						-- Update Tail pointer as needed
+						if (Tail = FIFO_DEPTH - 1) then
+							Tail := 0;
+							
+							Looped := false;
+						else
+							Tail := Tail + 1;
+						end if;
+						
+						
+					end if;
+				end if;
+				
+				if (WriteEn = '1') then
+					if ((Looped = false) or (Head /= Tail)) then
+						-- Write Data to Memory
+						Memory(Head) := DataIn;
+						
+						-- Increment Head pointer as needed
+						if (Head = FIFO_DEPTH - 1) then
+							Head := 0;
+							
+							Looped := true;
+						else
+							Head := Head + 1;
+						end if;
+					end if;
+				end if;
+				
+				-- Update Empty and Full flags
+				if (Head = Tail) then
+					if Looped then
+						Full <= '1';
+					else
+						Empty <= '1';
+					end if;
+				else
+					Empty	<= '0';
+					Full	<= '0';
+				end if;
+			end if;
+		end if;
+	end process;
+		
+end Behavioral;

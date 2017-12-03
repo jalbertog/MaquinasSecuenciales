@@ -1,124 +1,137 @@
---------------------------------------------------------------------------------
--- Company: 
--- Engineer:
---
--- Create Date:   00:13:01 12/02/2017
--- Design Name:   
--- Module Name:   C:/VHDL/Fifo/tb_fifo.vhd
--- Project Name:  Fifo
--- Target Device:  
--- Tool versions:  
--- Description:   
--- 
--- VHDL Test Bench Created by ISE for module: fifo
--- 
--- Dependencies:
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
---
--- Notes: 
--- This testbench has been automatically generated using types std_logic and
--- std_logic_vector for the ports of the unit under test.  Xilinx recommends
--- that these types always be used for the top-level I/O of a design in order
--- to guarantee that the testbench will bind correctly to the post-implementation 
--- simulation model.
---------------------------------------------------------------------------------
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
-use ieee.numeric_std.all; 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
- 
-ENTITY tb_fifo IS
-END tb_fifo;
- 
-ARCHITECTURE behavior OF tb_fifo IS 
- 
-    -- Component Declaration for the Unit Under Test (UUT)
- 
-    COMPONENT fifo
-    PORT(
-         clk : IN  std_logic;
-         reset : IN  std_logic;
-         rd : IN  std_logic;
-         wr : IN  std_logic;
-         w_data : IN  std_logic_vector(7 downto 0);
-         empty : OUT  std_logic;
-         full : OUT  std_logic;
-         r_data : OUT  std_logic_vector(7 downto 0)
-        );
-    END COMPONENT;
-    
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
 
-   --Inputs
-   signal clk : std_logic := '0';
-   signal reset : std_logic := '0';
-   signal rd : std_logic := '0';
-   signal wr : std_logic := '0';
-   signal w_data : std_logic_vector(7 downto 0) := (others => '0');
+ENTITY TB_STD_FIFO IS
+END TB_STD_FIFO;
 
- 	--Outputs
-   signal empty : std_logic;
-   signal full : std_logic;
-   signal r_data : std_logic_vector(7 downto 0);
+ARCHITECTURE behavior OF TB_STD_FIFO IS 
+	
+	-- Component Declaration for the Unit Under Test (UUT)
+	component STD_FIFO
+		
+		port (
+			CLK		: in std_logic;
+			RST		: in std_logic;
+			DataIn	: in std_logic_vector(7 downto 0);
+			WriteEn	: in std_logic;
+			ReadEn	: in std_logic;
+			DataOut	: out std_logic_vector(7 downto 0);
+			Full	: out std_logic;
+			Empty	: out std_logic
+		);
+	end component;
+	
+	--Inputs
+	signal CLK		: std_logic := '0';
+	signal RST		: std_logic := '0';
+	signal DataIn	: std_logic_vector(7 downto 0) := (others => '0');
+	signal ReadEn	: std_logic := '0';
+	signal WriteEn	: std_logic := '0';
+	
+	--Outputs
+	signal DataOut	: std_logic_vector(7 downto 0);
+	signal Empty	: std_logic;
+	signal Full		: std_logic;
+	
+	-- Clock period definitions
+	constant CLK_period : time := 10 ns;
 
-   -- Clock period definitions
-   constant clk_period : time := 10 ns;
- 
 BEGIN
- 
+
 	-- Instantiate the Unit Under Test (UUT)
-   uut: fifo PORT MAP (
-          clk => clk,
-          reset => reset,
-          rd => rd,
-          wr => wr,
-          w_data => w_data,
-          empty => empty,
-          full => full,
-          r_data => r_data
-        );
+	uut: STD_FIFO
+		PORT MAP (
+			CLK		=> CLK,
+			RST		=> RST,
+			DataIn	=> DataIn,
+			WriteEn	=> WriteEn,
+			ReadEn	=> ReadEn,
+			DataOut	=> DataOut,
+			Full	=> Full,
+			Empty	=> Empty
+		);
+	
+	-- Clock process definitions
+	CLK_process :process
+	begin
+		CLK <= '0';
+		wait for CLK_period/2;
+		CLK <= '1';
+		wait for CLK_period/2;
+	end process;
+	
+	-- Reset process
+	rst_proc : process
+	begin
+	wait for CLK_period * 5;
+		
+		RST <= '1';
+		
+		wait for CLK_period * 5;
+		
+		RST <= '0';
+		
+		wait;
+	end process;
+	
+	-- Write process
+	wr_proc : process
+		variable counter : unsigned (7 downto 0) := (others => '0');
+	begin		
+		wait for CLK_period * 20;
 
-   -- Clock process definitions
-   clk_process :process
-   begin
-		clk <= '0';
-		wait for clk_period/2;
-		clk <= '1';
-		wait for clk_period/2;
+		for i in 1 to 32 loop
+			counter := counter + 1;
+			
+			DataIn <= std_logic_vector(counter);
+			
+			wait for CLK_period * 1;
+			
+			WriteEn <= '1';
+			
+			wait for CLK_period * 1;
 		
+			WriteEn <= '0';
+		end loop;
 		
+		wait for clk_period * 20;
 		
-   end process;
- 
-
-   -- Stimulus process
-   stim_proc: process
-   begin		
-      -- hold reset state for 100 ns.
-      wait for 100 ns;	
-
-      wait for clk_period*10;
-
-      -- insert stimulus here 
+		for i in 1 to 32 loop
+			counter := counter + 1;
+			
+			DataIn <= std_logic_vector(counter);
+			
+			wait for CLK_period * 1;
+			
+			WriteEn <= '1';
+			
+			wait for CLK_period * 1;
+			
+			WriteEn <= '0';
+		end loop;
 		
-	 --clk
-	 --reset
-	 --rd <= '';
-	 --wr <= '1';
-	 --w_data:  --(B-1 downto 0);   
-    --empty: 
-    --full: 
-    --r_data:  --(B-1 downto 0)
-
+		wait;
+	end process;
+	
+	-- Read process
+	rd_proc : process
+	begin
+		wait for CLK_period * 20;
 		
+		wait for CLK_period * 40;
+			
+		ReadEn <= '1';
 		
+		wait for CLK_period * 60;
 		
-
-      wait;
-   end process;
+		ReadEn <= '0';
+		
+		wait for CLK_period * 10;
+		
+		ReadEn <= '1';
+		
+		wait;
+	end process;
 
 END;
